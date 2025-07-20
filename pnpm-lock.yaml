@@ -11,15 +11,54 @@ importers:
       '@biomejs/biome':
         specifier: ^2.1.2
         version: 2.1.2
+      '@figma/plugin-typings':
+        specifier: ^1.83.0
+        version: 1.116.0
       '@types/node':
         specifier: ^18.15.11
         version: 18.19.120
+      '@types/postcss-url':
+        specifier: ^10.0.0
+        version: 10.0.4
+      '@types/react':
+        specifier: ^18.0.28
+        version: 18.3.23
+      '@types/react-dom':
+        specifier: ^18.0.11
+        version: 18.3.7(@types/react@18.3.23)
+      '@vitejs/plugin-react':
+        specifier: ^4.2.1
+        version: 4.7.0(vite@5.4.19(@types/node@18.19.120)(sass@1.89.2))
+      npm-run-all:
+        specifier: ^4.1.5
+        version: 4.1.5
+      postcss:
+        specifier: ^8.4.21
+        version: 8.5.6
+      postcss-url:
+        specifier: ^10.1.3
+        version: 10.1.3(postcss@8.5.6)
       rimraf:
         specifier: ^5.0.5
         version: 5.0.10
+      sass:
+        specifier: ^1.60.0
+        version: 1.89.2
       typescript:
         specifier: ^5.3.0
         version: 5.8.3
+      vite:
+        specifier: ^5.0.11
+        version: 5.4.19(@types/node@18.19.120)(sass@1.89.2)
+      vite-plugin-generate-file:
+        specifier: ^0.1.1
+        version: 0.1.1
+      vite-plugin-react-rich-svg:
+        specifier: ^1.0.0
+        version: 1.2.1(typescript@5.8.3)(vite@5.4.19(@types/node@18.19.120)(sass@1.89.2))
+      vite-plugin-singlefile:
+        specifier: ^2.0.3
+        version: 2.3.0(rollup@4.45.1)(vite@5.4.19(@types/node@18.19.120)(sass@1.89.2))
 
   packages/figma-plugin-vite-1:
     dependencies:
@@ -32,55 +71,6 @@ importers:
       react-dom:
         specifier: ^18.2.0
         version: 18.3.1(react@18.3.1)
-    devDependencies:
-      '@figma/plugin-typings':
-        specifier: ^1.83.0
-        version: 1.116.0
-      '@types/node':
-        specifier: ^18.15.11
-        version: 18.19.120
-      '@types/postcss-url':
-        specifier: ^10.0.0
-        version: 10.0.4
-      '@types/react':
-        specifier: ^18.0.28
-        version: 18.3.23
-      '@types/react-dom':
-        specifier: ^18.0.11
-        version: 18.3.7(@types/react@18.3.23)
-      '@vitejs/plugin-react':
-        specifier: ^4.2.1
-        version: 4.7.0(vite@5.4.19(@types/node@18.19.120)(sass@1.89.2))
-      npm-run-all:
-        specifier: ^4.1.5
-        version: 4.1.5
-      postcss:
-        specifier: ^8.4.21
-        version: 8.5.6
-      postcss-url:
-        specifier: ^10.1.3
-        version: 10.1.3(postcss@8.5.6)
-      rimraf:
-        specifier: ^5.0.5
-        version: 5.0.10
-      sass:
-        specifier: ^1.60.0
-        version: 1.89.2
-      typescript:
-        specifier: ^5.3.0
-        version: 5.8.3
-      vite:
-        specifier: ^5.0.11
-        version: 5.4.19(@types/node@18.19.120)(sass@1.89.2)
-      vite-plugin-generate-file:
-        specifier: ^0.1.1
-        version: 0.1.1
-      vite-plugin-react-rich-svg:
-        specifier: ^1.0.0
-        version: 1.2.1(typescript@5.8.3)(vite@5.4.19(@types/node@18.19.120)(sass@1.89.2))
-      vite-plugin-singlefile:
-        specifier: ^2.0.3
-        version: 2.3.0(rollup@4.45.1)(vite@5.4.19(@types/node@18.19.120)(sass@1.89.2))
 
   packages/figma-plugin-vite-2:
     dependencies:
@@ -93,55 +83,6 @@ importers:
       react-dom:
         specifier: ^18.2.0
         version: 18.3.1(react@18.3.1)
-    devDependencies:
-      '@figma/plugin-typings':
-        specifier: ^1.83.0
-        version: 1.116.0
-      '@types/node':
-        specifier: ^18.15.11
-        version: 18.19.120
-      '@types/postcss-url':
-        specifier: ^10.0.0
-        version: 10.0.4
-      '@types/react':
-        specifier: ^18.0.28
-        version: 18.3.23
-      '@types/react-dom':
-        specifier: ^18.0.11
-        version: 18.3.7(@types/react@18.3.23)
-      '@vitejs/plugin-react':
-        specifier: ^4.2.1
-        version: 4.7.0(vite@5.4.19(@types/node@18.19.120)(sass@1.89.2))
-      npm-run-all:
-        specifier: ^4.1.5
-        version: 4.1.5
-      postcss:
-        specifier: ^8.4.21
-        version: 8.5.6
-      postcss-url:
-        specifier: ^10.1.3
-        version: 10.1.3(postcss@8.5.6)
-      rimraf:
-        specifier: ^5.0.5
-        version: 5.0.10
-      sass:
-        specifier: ^1.60.0
-        version: 1.89.2
-      typescript:
-        specifier: ^5.3.0
-        version: 5.8.3
-      vite:
-        specifier: ^5.0.11
-        version: 5.4.19(@types/node@18.19.120)(sass@1.89.2)
-      vite-plugin-generate-file:
-        specifier: ^0.1.1
-        version: 0.1.1
-      vite-plugin-react-rich-svg:
-        specifier: ^1.0.0
-        version: 1.2.1(typescript@5.8.3)(vite@5.4.19(@types/node@18.19.120)(sass@1.89.2))
-      vite-plugin-singlefile:
-        specifier: ^2.0.3
-        version: 2.3.0(rollup@4.45.1)(vite@5.4.19(@types/node@18.19.120)(sass@1.89.2))
 
   packages/figma-plugin-vite-3:
     dependencies:
@@ -154,55 +95,6 @@ importers:
       react-dom:
         specifier: ^18.2.0
         version: 18.3.1(react@18.3.1)
-    devDependencies:
-      '@figma/plugin-typings':
-        specifier: ^1.83.0
-        version: 1.116.0
-      '@types/node':
-        specifier: ^18.15.11
-        version: 18.19.120
-      '@types/postcss-url':
-        specifier: ^10.0.0
-        version: 10.0.4
-      '@types/react':
-        specifier: ^18.0.28
-        version: 18.3.23
-      '@types/react-dom':
-        specifier: ^18.0.11
-        version: 18.3.7(@types/react@18.3.23)
-      '@vitejs/plugin-react':
-        specifier: ^4.2.1
-        version: 4.7.0(vite@5.4.19(@types/node@18.19.120)(sass@1.89.2))
-      npm-run-all:
-        specifier: ^4.1.5
-        version: 4.1.5
-      postcss:
-        specifier: ^8.4.21
-        version: 8.5.6
-      postcss-url:
-        specifier: ^10.1.3
-        version: 10.1.3(postcss@8.5.6)
-      rimraf:
-        specifier: ^5.0.5
-        version: 5.0.10
-      sass:
-        specifier: ^1.60.0
-        version: 1.89.2
-      typescript:
-        specifier: ^5.3.0
-        version: 5.8.3
-      vite:
-        specifier: ^5.0.11
-        version: 5.4.19(@types/node@18.19.120)(sass@1.89.2)
-      vite-plugin-generate-file:
-        specifier: ^0.1.1
-        version: 0.1.1
-      vite-plugin-react-rich-svg:
-        specifier: ^1.0.0
-        version: 1.2.1(typescript@5.8.3)(vite@5.4.19(@types/node@18.19.120)(sass@1.89.2))
-      vite-plugin-singlefile:
-        specifier: ^2.0.3
-        version: 2.3.0(rollup@4.45.1)(vite@5.4.19(@types/node@18.19.120)(sass@1.89.2))
 
 packages:
 
