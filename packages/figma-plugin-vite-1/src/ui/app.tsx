@@ -1,21 +1,21 @@
-import { PLUGIN } from "@common/networkSides";
-import { UI_CHANNEL } from "@ui/app.network";
-import { Button } from "@ui/components/Button";
-import { Networker, NetworkError } from "monorepo-networker";
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-import figmaLogo from "@ui/assets/figma.png";
-import ReactLogo from "@ui/assets/react.svg?component";
-import viteLogo from "@ui/assets/vite.svg?url";
+import { PLUGIN } from '@common/networkSides';
+import { UI_CHANNEL } from '@ui/app.network';
+import figmaLogo from '@ui/assets/figma.png';
+import ReactLogo from '@ui/assets/react.svg?component';
+import viteLogo from '@ui/assets/vite.svg?url';
+import { Button } from '@ui/components/Button';
+import { NetworkError, Networker } from 'monorepo-networker';
 
-import "@ui/styles/main.scss";
+import '@ui/styles/main.scss';
 
 function App() {
   const [count, setCount] = useState(0);
   const [pingCount, setPingCount] = useState(0);
 
   useEffect(() => {
-    UI_CHANNEL.subscribe("ping", () => {
+    UI_CHANNEL.subscribe('ping', () => {
       setPingCount((cnt) => cnt + 1);
     });
   }, []);
@@ -23,13 +23,13 @@ function App() {
   return (
     <div className="homepage">
       <div>
-        <a href="https://www.figma.com" target="_blank">
+        <a href="https://www.figma.com" target="_blank" rel="noopener">
           <img src={figmaLogo} className="logo figma" alt="Figma logo" />
         </a>
-        <a href="https://vitejs.dev" target="_blank">
+        <a href="https://vitejs.dev" target="_blank" rel="noopener">
           <img src={viteLogo} className="logo vite" alt="Vite logo" />
         </a>
-        <a href="https://reactjs.org" target="_blank">
+        <a href="https://reactjs.org" target="_blank" rel="noopener">
           <ReactLogo className="logo react" title="React logo" />
         </a>
       </div>
@@ -37,13 +37,11 @@ function App() {
       <h1>Figma + Vite + React</h1>
 
       <div className="card">
-        <Button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </Button>
+        <Button onClick={() => setCount((count) => count + 1)}>count is {count}</Button>
         <Button
           onClick={async () => {
-            const response = await UI_CHANNEL.request(PLUGIN, "ping", []);
-            console.log("Response:", response);
+            const response = await UI_CHANNEL.request(PLUGIN, 'ping', []);
+            console.log('Response:', response);
           }}
           style={{ marginInlineStart: 10 }}
         >
@@ -51,8 +49,8 @@ function App() {
         </Button>
         <Button
           onClick={() => {
-            console.log("Create a rectangle, please!");
-            UI_CHANNEL.emit(PLUGIN, "createRect", [100, 100]);
+            console.log('Create a rectangle, please!');
+            UI_CHANNEL.emit(PLUGIN, 'createRect', [100, 100]);
           }}
           style={{ marginInlineStart: 10 }}
         >
@@ -61,12 +59,8 @@ function App() {
         <Button
           onClick={async () => {
             try {
-              const result = await UI_CHANNEL.request(
-                PLUGIN,
-                "exportSelection",
-                []
-              );
-              console.log("Export: ", { result });
+              const result = await UI_CHANNEL.request(PLUGIN, 'exportSelection', []);
+              console.log('Export: ', { result });
             } catch (err) {
               if (err instanceof NetworkError) {
                 console.log("Couldn't export..", { message: err.message });

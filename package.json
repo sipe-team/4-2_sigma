@@ -6,11 +6,15 @@
   "packageManager": "pnpm@10.0.0",
   "scripts": {
     "dev": "pnpm -r --parallel dev",
+    "format": "biome format --write",
+    "lint": "biome lint --write",
+    "check": "biome check --write",
     "build": "pnpm -r build",
     "clean": "pnpm -r clean",
     "types": "pnpm -r types"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.1.2",
     "@types/node": "^18.15.11",
     "rimraf": "^5.0.5",
     "typescript": "^5.3.0"

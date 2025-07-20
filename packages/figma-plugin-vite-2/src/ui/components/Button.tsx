@@ -1,11 +1,11 @@
-import { classes } from "@ui/utils/classes.util";
-import { ComponentProps } from "react";
-import styles from "./Button.module.scss";
+import type { ComponentProps } from 'react';
 
-type Props = ComponentProps<"button">;
+import { classes } from '@ui/utils/classes.util';
+
+import styles from './Button.module.scss';
+
+type Props = ComponentProps<'button'>;
 
 export const Button = (props: Props) => {
-  return (
-    <button {...props} className={classes(props.className, styles.button)} />
-  );
+  return <button {...props} className={classes(props.className, styles.button)} />;
 };

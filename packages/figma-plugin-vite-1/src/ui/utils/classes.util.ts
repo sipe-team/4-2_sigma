@@ -1,3 +1,3 @@
 export function classes(...args: any[]) {
-  return args.filter((a) => !!a).join(" ");
+  return args.filter((a) => !!a).join(' ');
 }
