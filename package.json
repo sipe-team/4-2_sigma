@@ -1,0 +1,22 @@
+{
+  "name": "4-2-sigma",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "packageManager": "pnpm@10.0.0",
+  "scripts": {
+    "dev": "pnpm -r --parallel dev",
+    "build": "pnpm -r build",
+    "clean": "pnpm -r clean",
+    "types": "pnpm -r types"
+  },
+  "devDependencies": {
+    "@types/node": "^18.15.11",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.3.0"
+  },
+  "engines": {
+    "node": ">=18.12.0",
+    "pnpm": ">=10.0.0"
+  }
+}
