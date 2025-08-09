@@ -32,6 +32,8 @@ export const FilterControls = ({
         <option value="naming-convention">네이밍 이슈</option>
         <option value="duplicate-name">중복명</option>
         <option value="deep-structure">깊은 구조</option>
+        <option value="out-of-bounds">경계 벗어남</option>
+        <option value="overlapping">요소 겹침</option>
       </select>
 
       <span className="filter-label">페이지:</span>
@@ -48,8 +50,8 @@ export const FilterControls = ({
         ))}
       </select>
     </div>
-		<div className="filter-row">
-			<span className="filter-label">정렬:</span>
+    <div className="filter-row">
+      <span className="filter-label">정렬:</span>
       <select
         className="filter-select"
         value={currentSort}
@@ -61,7 +63,7 @@ export const FilterControls = ({
         <option value="page">페이지순</option>
         <option value="depth">깊이순</option>
       </select>
-		</div>
+    </div>
     <div className="filter-count">
       <span>{issueCount}</span>개 항목 표시 중
       {currentFilter !== "all" && <span> (이슈: {currentFilter})</span>}

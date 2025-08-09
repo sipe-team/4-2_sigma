@@ -151,13 +151,104 @@ function isEmptyLayer(node: SceneNode): boolean {
   return false;
 }
 
+// 프레임 경계를 벗어난 요소 체크
+function checkOutOfBounds(node: SceneNode, frame: FrameNode): boolean {
+  return node.x < 0 || node.y < 0 || 
+         node.x + node.width > frame.width ||
+         node.y + node.height > frame.height;
+}
+
+// 두 노드가 겹치는지 확인
+function checkNodeOverlap(nodeA: SceneNode, nodeB: SceneNode): boolean {
+  const aLeft = nodeA.x;
+  const aRight = nodeA.x + nodeA.width;
+  const aTop = nodeA.y;
+  const aBottom = nodeA.y + nodeA.height;
+  
+  const bLeft = nodeB.x;
+  const bRight = nodeB.x + nodeB.width;
+  const bTop = nodeB.y;
+  const bBottom = nodeB.y + nodeB.height;
+  
+  // 겹치지 않는 경우들을 제외하고 나면 겹치는 경우
+  return !(aRight <= bLeft || bRight <= aLeft || aBottom <= bTop || bBottom <= aTop);
+}
+
+// 겹치는 영역의 크기를 계산
+function calculateOverlapArea(nodeA: SceneNode, nodeB: SceneNode): number {
+  const left = Math.max(nodeA.x, nodeB.x);
+  const right = Math.min(nodeA.x + nodeA.width, nodeB.x + nodeB.width);
+  const top = Math.max(nodeA.y, nodeB.y);
+  const bottom = Math.min(nodeA.y + nodeA.height, nodeB.y + nodeB.height);
+  
+  if (left < right && top < bottom) {
+    return (right - left) * (bottom - top);
+  }
+  
+  return 0;
+}
+
+// 같은 레벨에서 겹치는 요소들 탐지
+function checkOverlapping(nodes: SceneNode[], pageName: string, parentDepth: number): LayerIssue[] {
+  const issues: LayerIssue[] = [];
+  const overlappingPairs = new Set<string>(); // 중복 방지
+  
+  // 모든 노드 쌍을 비교
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = i + 1; j < nodes.length; j++) {
+      const nodeA = nodes[i];
+      const nodeB = nodes[j];
+      
+      // 두 노드가 겹치는지 확인
+      if (checkNodeOverlap(nodeA, nodeB)) {
+        const pairKey = `${nodeA.id}-${nodeB.id}`;
+        
+        if (!overlappingPairs.has(pairKey)) {
+          overlappingPairs.add(pairKey);
+          
+          // 겹치는 영역 계산
+          const overlapArea = calculateOverlapArea(nodeA, nodeB);
+          const overlapPercentageA = (overlapArea / (nodeA.width * nodeA.height)) * 100;
+          const overlapPercentageB = (overlapArea / (nodeB.width * nodeB.height)) * 100;
+          
+          // 두 노드 모두에 대해 이슈 생성
+          issues.push({
+            id: nodeA.id,
+            name: nodeA.name,
+            type: nodeA.type,
+            issue: "overlapping",
+            description: `다른 요소와 겹침: "${nodeB.name}" (${Math.round(overlapPercentageA)}% 겹침)`,
+            category: `겹치는 영역: ${Math.round(overlapArea)}px²`,
+            page: pageName,
+            depth: parentDepth + 1
+          });
+          
+          issues.push({
+            id: nodeB.id,
+            name: nodeB.name,
+            type: nodeB.type,
+            issue: "overlapping",
+            description: `다른 요소와 겹침: "${nodeA.name}" (${Math.round(overlapPercentageB)}% 겹침)`,
+            category: `겹치는 영역: ${Math.round(overlapArea)}px²`,
+            page: pageName,
+            depth: parentDepth + 1
+          });
+        }
+      }
+    }
+  }
+  
+  return issues;
+}
+
 // 레이어 순회 및 검사
 function auditLayers(
   node: BaseNode,
   issues: LayerIssue[],
   pageName: string,
   depth: number = 0,
-  layerNames: Map<string, string[]> = new Map()
+  layerNames: Map<string, string[]> = new Map(),
+  parentFrame: FrameNode | null = null
 ): number {
   let totalLayers = 0;
 
@@ -213,17 +304,48 @@ function auditLayers(
         depth,
       });
     }
+
+    // 프레임 경계 벗어남 체크
+    if (parentFrame && checkOutOfBounds(sceneNode, parentFrame)) {
+      issues.push({
+        id: node.id,
+        name: node.name,
+        type: node.type,
+        issue: "out-of-bounds",
+        description: `프레임 경계를 벗어남 (x: ${Math.round(sceneNode.x)}, y: ${Math.round(sceneNode.y)}, w: ${Math.round(sceneNode.width)}, h: ${Math.round(sceneNode.height)})`,
+        category: `프레임 크기: ${Math.round(parentFrame.width)}×${Math.round(parentFrame.height)}`,
+        page: pageName,
+        depth
+      });
+    }
   }
 
   // 자식 노드들 순회
   if ("children" in node) {
-    for (const child of node.children) {
+    const children = node.children as SceneNode[];
+    
+    // 현재 노드가 프레임이면 parentFrame 업데이트
+    const currentFrame = node.type === "FRAME" ? node as FrameNode : parentFrame;
+    
+    // 같은 레벨의 자식들 간 겹침 검사 (가시적인 자식들만)
+    if (children.length > 1) {
+      const visibleChildren = children.filter(child => child.visible);
+      
+      if (visibleChildren.length > 1) {
+        const overlappingIssues = checkOverlapping(visibleChildren, pageName, depth);
+        issues.push(...overlappingIssues);
+      }
+    }
+    
+    // 각 자식 노드 재귀 검사
+    for (const child of children) {
       totalLayers += auditLayers(
         child,
         issues,
         pageName,
         depth + 1,
-        layerNames
+        layerNames,
+        currentFrame
       );
     }
   }
@@ -265,7 +387,7 @@ export function performAudit(): AuditResult {
   // 모든 페이지 검사
   for (const page of figma.root.children) {
     const layerNames = new Map<string, string[]>();
-    totalLayers += auditLayers(page, issues, page.name, 0, layerNames);
+    totalLayers += auditLayers(page, issues, page.name, 0, layerNames, null);
 
     // 페이지별 중복명 검사
     checkDuplicateNames(layerNames, issues, page.name);
@@ -284,6 +406,12 @@ export function performAudit(): AuditResult {
   const deepStructures = issues.filter(
     (issue) => issue.issue === "deep-structure"
   ).length;
+  const outOfBoundsElements = issues.filter(
+    (issue) => issue.issue === "out-of-bounds"
+  ).length;
+  const overlappingElements = issues.filter(
+    (issue) => issue.issue === "overlapping"
+  ).length;
 
   return {
     issues,
@@ -293,6 +421,8 @@ export function performAudit(): AuditResult {
       namingIssues,
       duplicateNames,
       deepStructures,
+      outOfBoundsElements,
+      overlappingElements,
     },
   };
 }

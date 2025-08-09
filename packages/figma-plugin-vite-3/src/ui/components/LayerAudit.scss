@@ -122,26 +122,36 @@
       .filter-row {
         display: flex;
         align-items: center;
-        gap: 2px;
+        gap: 4px;
         margin-bottom: 8px;
         flex-wrap: wrap;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
 
         .filter-label {
           font-size: 11px;
           color: #666;
           white-space: nowrap;
           flex-shrink: 0;
+          margin-right: 2px;
         }
 
         .filter-select {
           padding: 4px 6px;
           border: 1px solid #ddd;
           border-radius: 4px;
-          font-size: 12px;
+          font-size: 11px;
           background: white;
-          min-width: 70px;
-          max-width: 100px;
+          min-width: 80px;
+          max-width: 120px;
           flex: 1;
+          margin-right: 8px;
+
+          &:last-of-type {
+            margin-right: 0;
+          }
         }
       }
 
@@ -232,6 +242,16 @@
 
             &.badge-deep {
               background: #a29bfe;
+              color: white;
+            }
+
+            &.badge-bounds {
+              background: #ff6b6b;
+              color: white;
+            }
+
+            &.badge-overlap {
+              background: #ff9f43;
               color: white;
             }
           }

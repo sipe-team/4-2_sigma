@@ -6,7 +6,9 @@ export interface LayerIssue {
     | "empty-layer"
     | "naming-convention"
     | "duplicate-name"
-    | "deep-structure";
+    | "deep-structure"
+    | "overlapping"
+    | "out-of-bounds";
   category?: string;
   description: string;
   page: string;
@@ -21,5 +23,7 @@ export interface AuditResult {
     namingIssues: number;
     duplicateNames: number;
     deepStructures: number;
+    outOfBoundsElements: number;   
+    overlappingElements: number;
   };
 }

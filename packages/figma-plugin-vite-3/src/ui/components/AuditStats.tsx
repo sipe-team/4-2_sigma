@@ -29,6 +29,14 @@ export const AuditStats = ({ stats }: AuditStatsProps) => {
         <span>깊은 구조:</span>
         <span><strong>{stats.deepStructures}</strong></span>
       </div>
+      <div className="stat-item">
+        <span>경계 벗어남:</span>
+        <span><strong>{stats.outOfBoundsElements}</strong></span>
+      </div>
+      <div className="stat-item">
+        <span>요소 겹침:</span>
+        <span><strong>{stats.overlappingElements}</strong></span>
+      </div>
     </div>
   );
 };

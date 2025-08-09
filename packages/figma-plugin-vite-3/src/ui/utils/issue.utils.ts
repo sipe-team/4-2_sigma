@@ -48,6 +48,10 @@ export const getBadgeInfo = (issueType: string) => {
       return { class: "badge-duplicate", text: "중복명" };
     case "deep-structure":
       return { class: "badge-deep", text: "깊은 구조" };
+    case "out-of-bounds":
+      return { class: "badge-bounds", text: "경계 벗어남" };
+    case "overlapping":
+      return { class: "badge-overlap", text: "요소 겹침" };
     default:
       return { class: "badge-empty", text: "기타" };
   }
@@ -57,4 +61,11 @@ export const escapeHtml = (text: string): string => {
   const div = document.createElement("div");
   div.textContent = text;
   return div.innerHTML;
+};
+
+export const getIssueCount = (issues: LayerIssue[], filterValue: string): number => {
+  if (filterValue === "all") {
+    return issues.length;
+  }
+  return issues.filter((issue) => issue.issue === filterValue).length;
 };
