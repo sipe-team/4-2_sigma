@@ -7,6 +7,7 @@ interface FilterControlsProps {
   onSort: (value: string) => void;
   onPageChange: (value: string) => void;
   issueCount: number;
+  showPageTabs?: boolean; // 페이지 탭 표시 여부
 }
 
 export const FilterControls = ({ 
@@ -17,9 +18,28 @@ export const FilterControls = ({
   onFilter, 
   onSort, 
   onPageChange, 
-  issueCount 
+  issueCount,
+  showPageTabs = false 
 }: FilterControlsProps) => (
   <div className="filters">
+    {!showPageTabs && (
+      <div className="filter-row">
+        <span className="filter-label">페이지:</span>
+        <select
+          className="filter-select"
+          value={currentPage}
+          onChange={(e) => onPageChange(e.target.value)}
+        >
+          <option value="all">전체 페이지</option>
+          {availablePages.map(page => (
+            <option key={page} value={page}>
+              {page}
+            </option>
+          ))}
+        </select>
+      </div>
+    )}
+    
     <div className="filter-row">
       <span className="filter-label">이슈:</span>
       <select
@@ -36,21 +56,6 @@ export const FilterControls = ({
         <option value="overlapping">요소 겹침</option>
       </select>
 
-      <span className="filter-label">페이지:</span>
-      <select
-        className="filter-select"
-        value={currentPage}
-        onChange={(e) => onPageChange(e.target.value)}
-      >
-        <option value="all">전체 페이지</option>
-        {availablePages.map(page => (
-          <option key={page} value={page}>
-            {page}
-          </option>
-        ))}
-      </select>
-    </div>
-    <div className="filter-row">
       <span className="filter-label">정렬:</span>
       <select
         className="filter-select"
@@ -64,6 +69,7 @@ export const FilterControls = ({
         <option value="depth">깊이순</option>
       </select>
     </div>
+    
     <div className="filter-count">
       <span>{issueCount}</span>개 항목 표시 중
       {currentFilter !== "all" && <span> (이슈: {currentFilter})</span>}

@@ -12,6 +12,9 @@ import { FilterControls } from "./FilterControls";
 import { IssueList } from "./IssueList";
 import { filterIssues, filterByPage, sortIssues, getUniquePages } from "@ui/utils/issue.utils";
 import "./LayerAudit.scss";
+import { PageOverview } from "./PageOverview";
+import { PageTabs } from "./PageTabs";
+import { PageStats } from "./PageStats";
 
 export const LayerAudit: React.FC = () => {
   const [allIssues, setAllIssues] = useState<LayerIssue[]>([]);
@@ -132,6 +135,22 @@ export const LayerAudit: React.FC = () => {
       {showResults && (
         <div className="results">
           <AuditStats stats={stats} />
+
+          {/* 페이지 개요 (전체 보기일 때만) */}
+          {currentPage === "all" && <PageOverview allIssues={allIssues} />}
+
+          {/* 페이지 탭 */}
+          <PageTabs
+            allIssues={allIssues}
+            currentPage={currentPage}
+            onPageChange={handlePage}
+          />
+
+          {/* 페이지별 상세 통계 */}
+          <PageStats
+            allIssues={allIssues}
+            currentPage={currentPage}
+          />
           <FilterControls
             currentFilter={currentFilter}
             currentSort={currentSort}
@@ -141,6 +160,7 @@ export const LayerAudit: React.FC = () => {
             onSort={handleSort}
             onPageChange={handlePage}
             issueCount={filteredIssues.length}
+            showPageTabs={true}
           />
           <IssueList
             issues={filteredIssues}
