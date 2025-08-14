@@ -25,15 +25,146 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  padding: 0;
+  font-size: 12px;
+  background: #fff;
+  height: 100vh;
+  overflow: scroll;
+}
+
+html {
+  height: 100%;
+  overflow: scroll;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+  overflow: scroll;
 }
 
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+}
+
+.header {
+  margin-bottom: 16px;
+}
+.title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.description {
+  color: #666;
+  margin-bottom: 16px;
+}
+.button {
+  background: #18a0fb;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  width: 100%;
+  margin-bottom: 16px;
+}
+.button:hover {
+  background: #0d7bcd;
+}
+.stats {
+  background: #f5f5f5;
+  padding: 12px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+.stat-item:last-child {
+  margin-bottom: 0;
+}
+.filters {
+  margin-bottom: 16px;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 4px;
+}
+.filter-row {
+  margin-bottom: 8px;
+}
+.filter-row:last-child {
+  margin-bottom: 0;
+}
+.filter-label {
+  font-weight: 500;
+  margin-right: 8px;
+}
+.filter-select {
+  margin-right: 12px;
+  padding: 4px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+.filter-count {
+  font-size: 11px;
+  color: #666;
+}
+.issue-item {
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  padding: 12px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.issue-item:hover {
+  background: #f8f9fa;
+}
+.badge {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 500;
+}
+.badge-empty {
+  background: #fff3cd;
+  color: #856404;
+}
+.badge-naming {
+  background: #f8d7da;
+  color: #721c24;
+}
+.badge-duplicate {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+.badge-deep {
+  background: #e2e3e5;
+  color: #383d41;
+}
+.badge-bounds {
+  background: #ff6b6b;
+  color: white;
+}
+.badge-overlap {
+  background: #ff9f43;
+  color: white;
+}
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+}
+.loading {
+  text-align: center;
+  padding: 20px;
+  color: #666;
 }
 
 @media (prefers-color-scheme: light) {
